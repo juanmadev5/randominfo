@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Info API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Información Aleatoria</h1>
+        <button id="getRandomInfoBtn">Obtener Dato Aleatorio</button>
+        <div class="info" id="infoContainer"></div>
+    </div>
+
+    <script>
+        // Función para hacer la petición a la API
+        async function fetchRandomInfo() {
+            try {
+                // Hacer la petición a la API de tu servidor local
+                const response = await fetch('http://localhost/randominfo');
+                
+                // Verificar si la respuesta es correcta (código 200)
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener el dato aleatorio');
+                }
+
+                // Parsear el JSON de la respuesta
+                const data = await response.json();
+
+                // Mostrar la información recibida en el HTML
+                const infoContainer = document.getElementById('infoContainer');
+                infoContainer.textContent = data.info || 'No se recibió información válida.';
+            } catch (error) {
+                console.error('Error:', error);
+                const infoContainer = document.getElementById('infoContainer');
+                infoContainer.textContent = 'Ocurrió un error al obtener el dato.';
+            }
+        }
+
+        // Evento para el botón
+        document.getElementById('getRandomInfoBtn').addEventListener('click', fetchRandomInfo);
+    </script>
+
+</body>
+</html>

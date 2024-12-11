@@ -1,0 +1,6 @@
+@randominfo_HostAddress = https://localhost:7141
+
+GET {{randominfo_HostAddress}}/randominfo/
+Accept: application/json
+
+###
